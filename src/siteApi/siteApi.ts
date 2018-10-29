@@ -6,6 +6,8 @@ import cors from "cors";
 
 import { Env } from "@/siteApi/env";
 import { Route } from "@/siteApi/route";
+import { CatchRoute } from "./catchRoute";
+import { SQL } from "./sql";
 
 export class SiteApi {
 	public static init: SiteApi;
@@ -21,13 +23,16 @@ export class SiteApi {
 
 	public routes: Map<string, Route>;
 	public express: express.Application;
+	public db: SQL;
 
 	// database
 
 	constructor() {
 		dotenv.config();
+
 		this.routes = new Map();
 		this.express = express();
+		this.db = new SQL();
 	}
 
 	public initMiddleware(): void {
@@ -41,6 +46,7 @@ export class SiteApi {
 	}
 
 	public initRoutes(): void {
+		new CatchRoute().preInit(this)
 	}
 
 	public listen(): void {

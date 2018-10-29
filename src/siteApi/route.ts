@@ -11,9 +11,14 @@ export class Route {
 		this.router = express.Router();
 	}
 
-	public init(siteApi: SiteApi): void {
+	public preInit(siteApi: SiteApi): void {
 		this.siteApi = siteApi;
 		this.siteApi.express.use(this.basePath, this.router);
 		this.siteApi.routes.set(this.basePath, this);
+
+		this.init()
+	}
+
+	protected init(): void {
 	}
 }
