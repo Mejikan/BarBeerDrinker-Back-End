@@ -13,9 +13,16 @@ export class QueryRoute extends Route {
 	}
 
 	private async handle(req: Request, res: Response) {
-
-		const rows: any[] =  await this.siteAPI.db.query("SELECT *  FROM BarBeerDrinker.bars LIMIT 1 ;");
-		const row = rows[0];
-		res.status(200).end(row.name);
+		const queryArgs = req.query; // object with key value pairs parsed from the query string (url decoded already)
+		if (!queryArgs.q || queryArgs.q.trim().length < 1) {
+			res.status(400).end("Query is empty");
+		}
+		const sqlQuery = queryArgs.q; // normally would not do this because of potential SQL injection but meh
+		try {
+			const rows: any[] =  await this.siteAPI.db.query(sqlQuery);
+			res.status(200).end(JSON.stringify(rows));
+		} catch (err) {
+			res.status(400).end(JSON.stringify(err));
+		}
 	}
 }
