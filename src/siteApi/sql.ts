@@ -22,8 +22,8 @@ export class SQL {
 		});
 	}
 
-	public query( query: string ) {
-		return new Promise( (resolve, reject) => {
+	public async query( query: string ) {
+		return new Promise<any[]>( (resolve, reject) => {
 			this.connection.query(query, (err, rows) => {
 				if (err) {
 					reject(err);

@@ -8,6 +8,7 @@ import { Env } from "@/siteApi/env";
 import { Route } from "@/siteApi/route";
 import { CatchRoute } from "./catchRoute";
 import { SQL } from "./sql";
+import { QueryRoute } from "@/siteApi/queryRoute";
 
 export class SiteApi {
 	public static init: SiteApi;
@@ -46,7 +47,9 @@ export class SiteApi {
 	}
 
 	public initRoutes(): void {
-		new CatchRoute().preInit(this)
+		new QueryRoute().preInit(this);
+		new CatchRoute().preInit(this);
+
 	}
 
 	public listen(): void {
