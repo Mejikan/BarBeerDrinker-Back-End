@@ -5,11 +5,11 @@ import { Route } from "@/siteApi/route";
  */
 export class QueryRoute extends Route {
 	constructor() {
-		super("/something");
+		super("/sql");
 	}
 
 	public init(): void {
-		this.router.all("/something", (req: Request, res: Response) => { this.handle(req, res); });
+		this.router.all("*", (req: Request, res: Response) => { this.handle(req, res); });
 	}
 
 	private async handle(req: Request, res: Response) {
